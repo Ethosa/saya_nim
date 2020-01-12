@@ -1,6 +1,8 @@
 # author: Ethosa
 
 import httpclient
+import strutils
+import typetraits
 import strformat
 import json
 export json
@@ -16,7 +18,7 @@ type
         session*: HttpClient
         longpoll*: LongPoll
 
-proc callMethod*(vk: Vk, method_name: string, params: varargs[(string, string)]): JsonNode =
+proc callMethod*(vk: Vk, method_name: string, params: JsonNode): JsonNode =
     ## Call any existing VK Api method
     ##
     ## Arguments:
@@ -29,10 +31,14 @@ proc callMethod*(vk: Vk, method_name: string, params: varargs[(string, string)])
 
     var url = fmt"https://api.vk.com/method/{method_name}?access_token={vk.access_token}&v={vk.api}"
 
-    for i in 0..<params.len:
-        url &= fmt"&{params[i][0]}={params[i][1]}"
+    for i in params.pairs:
+        try:
+            url &= fmt"&{i[0]}={i[1].str}"
+        except:
+            url &= fmt"&{i[0]}={i[1]}"
+    echo(url)
 
-    var response: JsonNode = parseJson(vk.session.postContent(url))
+    var response: JsonNode = parseJson(vk.session.postContent(url.replace(" ", "+")))
     return response
 
 

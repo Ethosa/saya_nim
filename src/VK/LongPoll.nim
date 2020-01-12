@@ -46,20 +46,20 @@ iterator listen*(longpoll: LongPoll): JsonNode =
                 "$#?act=a_check&key=$#&ts=$#&wait=25"
         response: JsonNode = parseJson(longpoll.session.getContent(start_server_url))["response"]
 
-        server: string = response["server"].getStr()
-        key: string = response["key"].getStr()
-        ts: int = response["ts"].getInt()
+        server: string = response["server"].str
+        key: string = response["key"].str
+        ts: string = response["ts"].str
 
     while true:
         var
             url: string =
-                for_server % [server, key, intToStr(ts)]
+                for_server % [server, key, ts]
             answer: JsonNode = parseJson(longpoll.session.getContent(url))
 
         if not answer.hasKey("ts"):
             break
 
-        ts = answer["ts"].getInt()
+        ts = answer["ts"].str
         var updates: JsonNode = answer["updates"]
 
         for item in updates.items:

@@ -30,7 +30,7 @@ var all_types: JsonNode = %* {
     "114": ["notification_settings_edit", "peer_id", "sound", "disable_until"]
 }
 
-proc Event(event: JsonNode): JsonNode =
+proc Event*(event: JsonNode): JsonNode =
     var
         node: JsonNode = %*{}
         event_type: string = intToStr(event[0].getInt())
