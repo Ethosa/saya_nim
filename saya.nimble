@@ -1,7 +1,7 @@
 [Package]
 name = "saya"
 author = "Ethosa"
-version = "0.0.2"
+version = "0.0.3"
 description = "Nim framework for VK"
 license = "LGPLv3"
 srcDir = "src"
