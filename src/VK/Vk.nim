@@ -24,7 +24,7 @@ proc callMethod*(vk: Vk, method_name: string, params: JsonNode): JsonNode =
     ## Arguments:
     ##     vk {Vk} -- vk object
     ##     method_name {string}
-    ##     params {varargs[(string, string)]} -- parameters for method
+    ##     params {JsonNode} -- parameters for method
     ##
     ## Returns:
     ##     JsonNode -- response after calling method

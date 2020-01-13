@@ -15,6 +15,10 @@ proc `$`(k: Keyboard): string =
     return fmt"Keyboard one_time={k.one_time}, inline={k.inline}, buttons={k.buttons}"
 
 proc addButton*(k: Keyboard, b: JsonNode) =
+    ## Adds a new button to the current line, if possible.
+    ## Arguments:
+    ##     k {Keyboard} -- keyboard object
+    ##     b {JsonNode} -- Button object
     if k.inline:
         if b["action"]["type"].str == "text":
             if len(k.buttons[len(k.buttons)-1]) < 3:
